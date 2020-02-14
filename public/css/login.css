@@ -1,0 +1,74 @@
+/* global */
+html, body {
+    height: 100%;
+    /* position: absolute; */
+    width: 100%;
+    font-family: 'Exo 2', sans-serif;
+    /* background-image: linear-gradient(to bottom right, red, yellow); */
+}
+
+body {
+    background-image: url('../images/test-login.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 100%;
+    background-color: #fff;
+}
+
+input.form-control {
+    /* background: #efefef; */
+    /* border-radius: 25px; */
+    padding: 20px 15px;
+}
+
+input.form-control:focus, button.form-control:focus {
+    outline: none;
+    box-shadow: none;
+    background: #fff;
+}
+
+button.form-control:focus {
+    border: 0;
+}
+
+button.form-control, button.form-control:focus {
+    background: #f63334;
+    height: 40px;
+    border-radius: 25px;
+}
+
+.bg-white {
+    background: #fff;
+}
+
+.font-19 {
+    font-size: 19px;
+}
+
+.width-37 {
+    width: 37px;
+}
+
+@media(min-width:320px) {
+    .padd-wrapper {
+        margin-top: 8em;
+        width: 100%;
+    }
+}
+
+@media(min-width:769px) {
+    .padd-wrapper {
+        height: 55vh;
+        margin-top: 10em;
+    }
+
+    .box-shadow {
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
+    }
+}
+
+@media(min-width:992px) {
+    .padd-wrapper {
+        width: 80%;
+    }
+}

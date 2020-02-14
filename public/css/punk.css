@@ -1,0 +1,361 @@
+/*
+ |--------------------------------------------------------------------------
+ | Contents
+ |--------------------------------------------------------------------------
+ |
+ | 1.Root Variables
+ | 2.Material Design Icons
+ | 3.Helpers
+ | 4.Layouts
+ | 5.Navbar
+ | 6.Sidebar
+ | 7.Progressbar
+ | 8.Default bootstrap classes
+ |
+ */
+/* 1.Root Variables */
+:root {
+    --body-bg: #e2e3ea;
+    --white: #37404a;
+    --medium-grey: #e2e3ea;
+    --medium-white: #f9f9f9;
+    --medium-red: #f63334;
+    --light-grey: #5c6070;
+    --medium-skyblue: #2f90ca;
+    --border-light: #e6e6e6;
+    --font-family: 'Fira Sans', sans-serif;
+}
+
+/* 2.Material Design Icons
+   ========================================================================== */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(/fonts/md-icons/MaterialIcons-Regular.eot?e79bfd88537def476913f3ed52f4f4b3);
+    /* For IE6-8 */
+    src: local("Material Icons"),
+        local("MaterialIcons-Regular"),
+        url(/fonts/md-icons/MaterialIcons-Regular.woff2?570eb83859dc23dd0eec423a49e147fe) format("woff2"),
+        url(/fonts/md-icons/MaterialIcons-Regular.woff?012cf6a10129e2275d79d6adac7f3b02) format("woff"),
+        url(/fonts/md-icons/MaterialIcons-Regular.ttf?a37b0c01c0baf1888ca812cc0508f6e2) format("truetype");
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 18px;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-feature-settings: 'liga';
+    font-feature-settings: 'liga';
+    vertical-align: middle;
+}
+
+/* Helper class
+==============================================================*/
+.height-26 {
+    height: 26px;
+}
+
+.height-75 {
+    height: 75px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* 5.Navbar
+   ======================================================================================================================================= */
+header .sq1dashboard-navbar {
+    background-color: var(--medium-white) !important;
+    border-bottom: 1px var(--border) solid;
+    height: 61px;
+}
+
+header .sq1dashboard-navbar .navbar-brand {
+    padding-right: 18px;
+}
+
+header .sq1dashboard-navbar .logoutMenu {
+    /* margin: .125rem -86px 0; */
+    margin: 0.7em -85px 0;
+    background: var(--medium-white);
+    width: 176px;
+}
+
+header .dropdown-item {
+    color: var(--grey-text);
+}
+
+header .sq1dashboard-navbar .navbar-nav .nav-item {
+    padding-top: 0px;
+    padding-right: 24px;
+    line-height: 18px;
+    color: var(--grey-lighten);
+    position: relative;
+}
+
+/* header .sq1dashboard-navbar .navbar-nav .nav-item span {
+       position: absolute;
+       top: -12px;
+       right: 14px;
+       background: var(--text-red);
+       color: var(--medium-white);
+       font-size: 0.8em;
+       color: white;
+       border-radius: 50%;
+       line-height: 10px;
+       font-weight: var(--bold);
+   } */
+header .sq1dashboard-navbar .navbar-nav .nav-item .nav-link i {
+    font-size: 22px;
+}
+
+header .sq1dashboard-navbar .navbar-nav .active>.nav-link {
+    background: var(--medium-red);
+    color: var(--medium-white) !important;
+    border-radius: 4px;
+}
+
+header .sq1dashboard-navbar .navbar-nav .nav-item:hover .nav-link {
+    color: var(--medium-red);
+}
+
+header .sq1dashboard-navbar .navbar-nav .nav-link.disabled {
+    cursor: context-menu;
+}
+
+/* header .sq1dashboard-navbar .navbar-nav img {
+       margin-top: 3px;
+   } */
+header .sq1dashboard-navbar .client_logo {
+    /* height: 30px; */
+    width: 150px;
+}
+
+/* Layout
+ ========================================*/
+body {
+    background: var(--body-bg);
+    color: var(--light-grey);
+    /* font-family: var(--font-family); */
+    font-family: 'Exo 2', sans-serif;
+    font-size: 14px;
+}
+
+h5, h6 {
+    width: 115px;
+}
+
+.align-height h6:nth-child(2) {
+    font-size: 23px;
+}
+
+a, a:hover, a:active, a:focus {
+    color: var(--light-grey);
+    text-decoration: none;
+}
+
+hr {
+    border-top: 1px solid #888;
+}
+
+main .sq1card {
+    padding: 0px 28px 0px 28px;
+}
+
+main .sq1card .card-padding {
+    padding: 14px;
+}
+
+main .sq1card .card {
+    width: 100%;
+    background: var(--medium-white);
+    box-shadow: 0px 0px 2px 2px #d2d2d2;
+    /* border: 1px solid #585d63; */
+}
+
+main .sq1card .card .card-body {
+    padding: 13px;
+}
+
+main .prev-count, main .prev-count i.fa.fa-long-arrow-up, main .prev-count i.fa.fa-long-arrow-down {
+    font-size: 22px;
+    color: #00adff;
+    /* margin-bottom: 10px; */
+    padding: 3px 6px;
+    opacity: 0.8;
+    background: var(--body-bg);
+}
+
+main .prev-count i.fa.fa-long-arrow-up {
+    color: #28a745;
+}
+
+main .prev-count i.fa.fa-long-arrow-down {
+    color: #ff0000;
+}
+
+main .prev-count {
+    animation: chcolor 4s infinite;
+}
+
+@keyframes chcolor {
+    0% {
+        color: #00adff;
+    }
+
+    50% {
+        color: #000;
+        opacity: 0.8;
+    }
+
+    75% {
+        color: #00adff;
+    }
+
+    100% {
+        color: #000;
+        opacity: 1;
+    }
+}
+
+main .sq1card .card h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+main .sq1card .card h4 {
+    font-weight: 100;
+    color: var(--medium-skyblue);
+    margin-top: -4px;
+}
+
+main .sq1card h6 {
+    margin-bottom: 15px;
+}
+
+main .sq1card .card .icon-color {
+    color: #c1c0c0e0;
+    /* display: block; */
+}
+
+main .sq1client-card .card {
+    background: var(--medium-white);
+}
+
+main .table td, .table thead th {
+    border: 1px solid transparent;
+    border-bottom: 1px solid var(--border-light);
+    padding: 10px 7px;
+}
+
+main .card .loading-process img {
+    width: 30px;
+    /* margin-top: 8px; */
+    opacity: 0.7;
+    position: absolute;
+    left: calc(100% - 55%);
+    top: calc(30%);
+}
+
+/* file upload button design */
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.fade-scale {
+    transform: scale(0);
+    opacity: 0;
+    -webkit-transition: all .25s linear;
+    -o-transition: all .25s linear;
+    transition: all .25s linear;
+}
+
+.fade-scale.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+@media(min-width:320px) {
+    header .sq1dashboard-navbar .navbar-nav {
+        padding: 5px 10px 15px;
+    }
+
+    main .sq1card .card h1 {
+        font-size: 35px;
+        margin-bottom: 0;
+    }
+}
+
+@media(min-width:991px) {
+    main .sq1card h6, i.fa {
+        font-size: 15px;
+    }
+
+    header .sq1dashboard-navbar .navbar-nav {
+        padding: inherit;
+    }
+
+    header .sq1dashboard-navbar .logoutMenu {
+        margin: 0.7em -85px 0;
+    }
+
+    main .sq1card .card h1 {
+        font-size: 33px;
+        margin-bottom: 0;
+    }
+
+    main .sq1card .card h4 {
+        font-size: 22px;
+    }
+}
+
+@media(min-width:1145px) {
+    main .sq1card h6 {
+        font-size: 15px;
+    }
+
+    main .sq1card i.fa {
+        font-size: 20px;
+    }
+}
+
+@media(min-width:1148px) {
+    main .sq1card .card h1 {
+        font-size: 40px;
+        margin-bottom: 0;
+    }
+
+    main .sq1card .card h4 {
+        font-size: 24px;
+    }
+
+    .h-195 {
+        height: 195px;
+    }
+}
