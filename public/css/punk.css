@@ -17,7 +17,7 @@
 :root {
     --body-bg: #e2e3ea;
     --white: #37404a;
-    --medium-grey: #e2e3ea;
+    --medium-grey: #d6d6d6;;
     --medium-white: #f9f9f9;
     --medium-red: #f63334;
     --light-grey: #5c6070;
@@ -79,7 +79,7 @@
    ======================================================================================================================================= */
 header .sq1dashboard-navbar {
     background-color: var(--medium-white) !important;
-    border-bottom: 1px var(--border) solid;
+    border-bottom: 1px #dcdcdc solid;
     height: 61px;
 }
 
@@ -171,191 +171,106 @@ hr {
     border-top: 1px solid #888;
 }
 
-main .sq1card {
-    padding: 0px 28px 0px 28px;
+main {
+  margin-left: 167px;
+  padding: 8px;
 }
 
-main .sq1card .card-padding {
-    padding: 14px;
-}
-
-main .sq1card .card {
-    width: 100%;
+aside {
     background: var(--medium-white);
-    box-shadow: 0px 0px 2px 2px #d2d2d2;
-    /* border: 1px solid #585d63; */
+    position: fixed;
+    width: 165px;
+    /* height: 100%; */
+    overflow-x: hidden;
+    flex-direction: column;
+    top: 61px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0), 0 2px 2px 0 rgba(0, 0, 0, 0.27), 0 1px 5px 0 rgba(0, 0, 0, 0);
+    bottom: 0px;
 }
 
-main .sq1card .card .card-body {
-    padding: 13px;
-}
-
-main .prev-count, main .prev-count i.fa.fa-long-arrow-up, main .prev-count i.fa.fa-long-arrow-down {
-    font-size: 22px;
-    color: #00adff;
-    /* margin-bottom: 10px; */
-    padding: 3px 6px;
-    opacity: 0.8;
-    background: var(--body-bg);
-}
-
-main .prev-count i.fa.fa-long-arrow-up {
-    color: #28a745;
-}
-
-main .prev-count i.fa.fa-long-arrow-down {
-    color: #ff0000;
-}
-
-main .prev-count {
-    animation: chcolor 4s infinite;
-}
-
-@keyframes chcolor {
-    0% {
-        color: #00adff;
-    }
-
-    50% {
-        color: #000;
-        opacity: 0.8;
-    }
-
-    75% {
-        color: #00adff;
-    }
-
-    100% {
-        color: #000;
-        opacity: 1;
-    }
-}
-
-main .sq1card .card h2 {
-    font-size: 18px;
+aside .nav-link {
+    line-height: 1.375rem;
     font-weight: 500;
-    margin-bottom: 10px;
+    letter-spacing: .00714em;
+    text-decoration: inherit;
+    text-transform: inherit;
+    margin: 5px;
 }
 
-main .sq1card .card h4 {
-    font-weight: 100;
-    color: var(--medium-skyblue);
-    margin-top: -4px;
+aside .nav-link:hover {
+    line-height: 1.375rem;
+    font-weight: 500;
+    letter-spacing: .00714em;
+    text-decoration: inherit;
+    text-transform: inherit;
+    margin: 5px;
+    color: var(--white);
+    background-color: var(--medium-grey);
 }
 
-main .sq1card h6 {
-    margin-bottom: 15px;
+aside .sub-link {
+    padding: 9px;
+    font-size: 15px;
+    text-decoration: none;
+    border-radius: .25rem;
 }
 
-main .sq1card .card .icon-color {
-    color: #c1c0c0e0;
-    /* display: block; */
+aside .sub-link:hover {
+    padding: 9px;
+    border-radius: .25rem;
+    text-decoration: inherit;
+    text-transform: inherit;
+    color: var(--white);
+    background-color: var(--light-blue);
+}
+.custom-active {
+  background: #00b3bb;
+  color: #fff;
 }
 
-main .sq1client-card .card {
-    background: var(--medium-white);
+aside .sub-link:hover a {
+    text-decoration: none;
+    color: var(--white);
 }
 
-main .table td, .table thead th {
-    border: 1px solid transparent;
-    border-bottom: 1px solid var(--border-light);
-    padding: 10px 7px;
+aside ul li i {
+    margin-right: 0px!important;
+
+    font-size: 22px !important;
 }
 
-main .card .loading-process img {
-    width: 30px;
-    /* margin-top: 8px; */
-    opacity: 0.7;
-    position: absolute;
-    left: calc(100% - 55%);
-    top: calc(30%);
+aside ul li a {
+    color: rgb(103, 102, 102);
 }
 
-/* file upload button design */
-.fileUpload {
-    position: relative;
-    overflow: hidden;
+aside ul li a:hover {
+    color: rgb(103, 102, 102);
 }
 
-.fileUpload input.upload {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    opacity: 0;
-    cursor: pointer;
+aside ul li #menu3 {
+    margin-left: 25px;
 }
 
-.fade-scale {
-    transform: scale(0);
-    opacity: 0;
-    -webkit-transition: all .25s linear;
-    -o-transition: all .25s linear;
-    transition: all .25s linear;
+aside .list-group {
+    margin-top: 8px;
 }
 
-.fade-scale.show {
-    opacity: 1;
-    transform: scale(1);
+aside .list-group-item {
+    border: none;
+    color: var(--light-grey);
+    padding: 20px;
 }
 
-@media(min-width:320px) {
-    header .sq1dashboard-navbar .navbar-nav {
-        padding: 5px 10px 15px;
-    }
-
-    main .sq1card .card h1 {
-        font-size: 35px;
-        margin-bottom: 0;
-    }
+aside .list-group-item>i {
+    margin-right: 10px;
 }
 
-@media(min-width:991px) {
-    main .sq1card h6, i.fa {
-        font-size: 15px;
-    }
-
-    header .sq1dashboard-navbar .navbar-nav {
-        padding: inherit;
-    }
-
-    header .sq1dashboard-navbar .logoutMenu {
-        margin: 0.7em -85px 0;
-    }
-
-    main .sq1card .card h1 {
-        font-size: 33px;
-        margin-bottom: 0;
-    }
-
-    main .sq1card .card h4 {
-        font-size: 22px;
-    }
+.card-header {
+  font-size: 20px;
 }
-
-@media(min-width:1145px) {
-    main .sq1card h6 {
-        font-size: 15px;
-    }
-
-    main .sq1card i.fa {
-        font-size: 20px;
-    }
+.col-form-label {
+  font-size: 16px;
 }
-
-@media(min-width:1148px) {
-    main .sq1card .card h1 {
-        font-size: 40px;
-        margin-bottom: 0;
-    }
-
-    main .sq1card .card h4 {
-        font-size: 24px;
-    }
-
-    .h-195 {
-        height: 195px;
-    }
+.nav-pills .nav-link {
+  font-size: 16px;
 }

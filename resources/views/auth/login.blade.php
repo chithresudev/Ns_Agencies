@@ -15,7 +15,7 @@
                 <form class="sq1shield-form w-100" method="POST" action="{{ route('login') }}">
                 @csrf
                 {{-- <img src="{{asset('images/favicon.ico')}}" alt="User" class="d-block mx-auto mb-4"> --}}
-                <h4 class="text-center pb-3 text-dark">Welcome to <span class="text-danger">Demo</span> </h4>
+                <h4 class="text-center pb-3 text-dark">Welcome to <span class="text-danger">NS Agencies</span> </h4>
                 <div class="card bg-transparent border-0">
                   <div class="card-body border-0">
                     <div class="form-group row sq1shield-form-group mb-3">
@@ -67,6 +67,9 @@
                   <div class="mx-auto">
                     <a class="" href="{{ route('register') }}">{{ __('  Create an new account') }}</a>
                   </div>
+                  <a class="btn btn-link" href="{{ route('password.request') }}">
+                                   {{ __('Forgot Your Password?') }}
+                               </a>
                 </div>
               </form>
               </div>

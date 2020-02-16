@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}">
+                    <form method="POST" action="/login">
+                    <!-- <form method="POST" action="{{ route('password.email') }}"> -->
                         @csrf
 
                         <div class="form-group row">

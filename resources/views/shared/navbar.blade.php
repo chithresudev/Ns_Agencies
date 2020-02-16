@@ -3,15 +3,15 @@
 $logo = config('app.client_logo');
 @endphp
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light sq1dashboard-navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-light sq1dashboard-navbar">
 
   <a class="navbar-brand sidebar-toggle d-none"  href="#">
     <i class="material-icons">menu</i>
   </a>
 
-  <a class="navbar-brand" href="#">
-     <img src="{{ asset('images/logo.png') }}" width="45" height="45"
-      alt="SQ1Shield">
+  <a class="navbar-brand text-danger" href="#">
+    Welcome to NS Agencies
+
   </a>
 
 
@@ -31,10 +31,8 @@ $logo = config('app.client_logo');
     <!-- Right Side Of Navbar -->
     <ul class="navbar-nav ml-auto align-items-lg-center align-items-end">
         <!-- Client Logo -->
-         @if ($logo)
-           <img src="{{ asset('images/' . $logo) }}"
-           alt="client logo" class="client_logo pr-3">
-         @endif
+        <img src="{{ asset('images/BPCL-logo.png') }}"  height="50"
+         alt="Logo">
         <!-- Authentication Links -->
         @guest
         <li>

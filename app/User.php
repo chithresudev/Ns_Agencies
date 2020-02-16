@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role',
     ];
 
     /**
@@ -36,4 +36,78 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the Fuel record associated with the user.
+     */
+    public function fuels()
+    {
+        return $this->hasMany('App\Fuel');
+    }
+
+    /**
+     * Get the Fuel diesel record
+     */
+    public function dieselread()
+    {
+        return $this->fuels->where('fuel', 'diesel')->sum('read_value');
+    }
+
+    /**
+     * Get the Fuel petrol record
+     */
+    public function petrolread()
+    {
+        return $this->fuels->where('fuel', 'petrol')->sum('read_value');
+    }
+
+    /**
+     * Get the Payment record associated with the user.
+     */
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
+    /**
+     * Get the payment diesel record
+     */
+    public function dieselpayment()
+    {
+        return $this->payments->where('fuel', 'diesel')->sum('in_amount');
+    }
+
+    /**
+     * Get the payment petrol record
+     */
+    public function petrolpayment()
+    {
+        return $this->payments->where('fuel', 'petrol')->sum('in_amount');
+    }
+
+    /**
+     * Get the Payment record associated with the user.
+     */
+    public function stocks()
+    {
+        return $this->hasMany('App\Payment');
+    }
+
+    /**
+     * Get the payment diesel record
+     */
+    public function dieselstock()
+    {
+        return $this->stocks->where('fuel', 'diesel')->sum('in_stock');
+    }
+
+    /**
+     * Get the payment petrol record
+     */
+    public function petrolstock()
+    {
+        return $this->stocks->where('fuel', 'petrol')->sum('in_stock');
+    }
+
+
 }

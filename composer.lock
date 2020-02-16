@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95397a86754aa139273f90471b71389b",
+    "content-hash": "44492801f7f0db7e6d531fde9a5d69d0",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -279,6 +279,58 @@
                 "validator"
             ],
             "time": "2020-02-13T22:36:52+00:00"
+        },
+        {
+            "name": "elibyy/tcpdf-laravel",
+            "version": "6.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/elibyy/tcpdf-laravel.git",
+                "reference": "81e46b84fd90682e5f283d01dd448d4be3d9a3a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/elibyy/tcpdf-laravel/zipball/81e46b84fd90682e5f283d01dd448d4be3d9a3a7",
+                "reference": "81e46b84fd90682e5f283d01dd448d4be3d9a3a7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^6.0",
+                "tecnickcom/tcpdf": "6.2.*|6.3.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Elibyy\\TCPDF\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "PDF": "Elibyy\\TCPDF\\Facades\\TCPDF"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Elibyy\\TCPDF\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "eli y",
+                    "email": "elibyy@gmail.com"
+                }
+            ],
+            "description": "tcpdf support for Laravel 6",
+            "keywords": [
+                "TCPDF",
+                "laravel",
+                "pdf"
+            ],
+            "time": "2019-10-03T07:33:32+00:00"
         },
         {
             "name": "fideloper/proxy",
@@ -2890,6 +2942,68 @@
             "time": "2020-01-25T12:44:29+00:00"
         },
         {
+            "name": "tecnickcom/tcpdf",
+            "version": "6.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/TCPDF.git",
+                "reference": "19a535eaa7fb1c1cac499109deeb1a7a201b4549"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/19a535eaa7fb1c1cac499109deeb1a7a201b4549",
+                "reference": "19a535eaa7fb1c1cac499109deeb1a7a201b4549",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "config",
+                    "include",
+                    "tcpdf.php",
+                    "tcpdf_parser.php",
+                    "tcpdf_import.php",
+                    "tcpdf_barcodes_1d.php",
+                    "tcpdf_barcodes_2d.php",
+                    "include/tcpdf_colors.php",
+                    "include/tcpdf_filters.php",
+                    "include/tcpdf_font_data.php",
+                    "include/tcpdf_fonts.php",
+                    "include/tcpdf_images.php",
+                    "include/tcpdf_static.php",
+                    "include/barcodes/datamatrix.php",
+                    "include/barcodes/pdf417.php",
+                    "include/barcodes/qrcode.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
+            "homepage": "http://www.tcpdf.org/",
+            "keywords": [
+                "PDFD32000-2008",
+                "TCPDF",
+                "barcodes",
+                "datamatrix",
+                "pdf",
+                "pdf417",
+                "qrcode"
+            ],
+            "time": "2020-02-14T14:20:12+00:00"
+        },
+        {
             "name": "tijsverkoyen/css-to-inline-styles",
             "version": "2.2.2",
             "source": {
@@ -4989,16 +5103,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
-                "reference": "573381c0a64f155a0d9a23f4b0c797194805b925"
+                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/573381c0a64f155a0d9a23f4b0c797194805b925",
-                "reference": "573381c0a64f155a0d9a23f4b0c797194805b925",
+                "url": "https://api.github.com/repos/webmozart/assert/zipball/aed98a490f9a8f78468232db345ab9cf606cf598",
+                "reference": "aed98a490f9a8f78468232db345ab9cf606cf598",
                 "shasum": ""
             },
             "require": {
@@ -5033,7 +5147,7 @@
                 "check",
                 "validate"
             ],
-            "time": "2019-11-24T13:36:37+00:00"
+            "time": "2020-02-14T12:15:55+00:00"
         }
     ],
     "aliases": [],
