@@ -33,19 +33,19 @@ $ids = [];
                           <div class="col-md-6 p-2">
 
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" {{ $request->fuel == 'petrol' ? 'checked' : '' }}  type="radio" name="fuel" id="petrol" value="petrol">
+                                <input class="form-check-input" required {{ $request->fuel == 'petrol' ? 'checked' : '' }}  type="radio" name="fuel" id="petrol" value="petrol">
                                 <label class="form-check-label" for="petrol">Cash</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" {{ $request->fuel == 'diesel' ? 'checked' : '' }}  type="radio" name="fuel" id="diesel" value="diesel">
+                                <input class="form-check-input" required {{ $request->fuel == 'diesel' ? 'checked' : '' }}  type="radio" name="fuel" id="diesel" value="diesel">
                                 <label class="form-check-label" for="diesel">Diesel</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" {{ $request->fuel == 'speed' ? 'checked' : '' }}  type="radio" name="fuel" id="speed" value="speed">
+                                <input class="form-check-input" required {{ $request->fuel == 'speed' ? 'checked' : '' }}  type="radio" name="fuel" id="speed" value="speed">
                                 <label class="form-check-label" for="speed">Speed</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" {{ $request->fuel == 'all' ? 'checked' : '' }}  type="radio" name="fuel" id="all" value="all">
+                                <input class="form-check-input" required  {{ $request->fuel == 'all' ? 'checked' : '' }}  type="radio" name="fuel" id="all" value="all">
                                 <label class="form-check-label" for="all">All</label>
                               </div>
 
@@ -59,11 +59,11 @@ $ids = [];
                           <div class="col-md-6 p-2">
                             <select class="custom-select" name="payment" id="payment" required>
                              <option selected disabled value="">Choose...</option>
-                             <option value="paytm" {{ $request->payment == 'paytm' ? 'checked' : '' }}>PayTM</option>
-                             <option value="cash" {{ $request->payment == 'cash' ? 'checked' : '' }}>Cash</option>
-                             <option value="checque" {{ $request->payment == 'checque' ? 'checked' : '' }}>Checque</option>
-                             <option value="card" {{ $request->payment == 'card' ? 'checked' : '' }}>Card</option>
-                             <option value="all" {{ $request->payment == 'all' ? 'checked' : '' }}>All</option>
+                             <option value="paytm" {{ $request->payment == 'paytm' ? 'selected' : '' }}>PayTM</option>
+                             <option value="cash" {{ $request->payment == 'cash' ? 'selected' : '' }}>Cash</option>
+                             <option value="checque" {{ $request->payment == 'checque' ? 'selected' : '' }}>Checque</option>
+                             <option value="card" {{ $request->payment == 'card' ? 'selected' : '' }}>Card</option>
+                             <option value="all" {{ $request->payment == 'all' ? 'selected' : '' }}>All</option>
                            </select>
 
                           </div>
@@ -103,7 +103,7 @@ $ids = [];
                      array_push($ids, $payment->id);
                      @endphp
                     <th scope="row">{{ $key + 1 }}</th>
-                    <td>{{ $payment->created_at }}</td>
+                    <td>{{ $payment->created }}</td>
                     <td>{{ ucfirst($payment->fuel) }}</td>
                     <td>{{ $payment->type }}</td>
                     <td>{{ $payment->in_amount }}</td>
@@ -287,7 +287,7 @@ $ids = [];
           <tr>
 
            <th scope="row">{{ $key + 1 }}</th>
-           <td>{{ $payment->created_at }}</td>
+           <td>{{ $payment->created }}</td>
            <td>{{ ucfirst($payment->fuel) }}</td>
            <td>{{ $payment->type }}</td>
            <td>{{ $payment->in_amount }}</td>

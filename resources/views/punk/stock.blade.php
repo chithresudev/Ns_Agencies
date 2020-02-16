@@ -45,7 +45,7 @@ $ids = [];
                                 <label class="form-check-label" for="speed">Speed</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" required {{ $request->fuel == 'all' ? 'checked' : '' }}  type="radio" name="fuel" id="all" value="all">
+                                <input class="form-check-input" required checked {{ $request->fuel == 'all' ? 'checked' : '' }}  type="radio" name="fuel" id="all" value="all">
                                 <label class="form-check-label" for="all">All</label>
                               </div>
 
@@ -93,7 +93,7 @@ $ids = [];
                     <td>{{ $stock->comment }}</td>
 
                     <td>{{ ucfirst($stock->user->name) }}</td>
-                    <td>{{ $stock->created_at }}</td>
+                    <td>{{ $stock->created }}</td>
                   </tr>
                   @empty
                   <tr>
@@ -257,7 +257,7 @@ $ids = [];
            <td>{{ $stock->out_stock }}</td>
            <td>{{ $stock->bal_stock }}</td>
            <td>{{ $stock->comment }}</td>
-           <td>{{ $stock->created_at }}</td>
+           <td>{{ $stock->created }}</td>
          </tr>
          @empty
          <tr>

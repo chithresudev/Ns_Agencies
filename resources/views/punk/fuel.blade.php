@@ -93,7 +93,7 @@ $ids = [];
                     <td>{{ $fuel->read_value }}</td>
                     <td>{{ $fuel->total_amt }}</td>
                     <td>{{ ucfirst($fuel->user->name) }}</td>
-                    <td>{{ $fuel->created_at }}</td>
+                    <td>{{ $fuel->created }}</td>
                   </tr>
                   @empty
                   <tr>
@@ -327,7 +327,7 @@ $ids = [];
             <td>{{ $fuel->price }}</td>
             <td>{{ $fuel->read_value }}</td>
             <td>{{ $fuel->total_amt }}</td>
-            <td>{{ $fuel->created_at }}</td>
+            <td>{{ $fuel->created }}</td>
           </tr>
           @empty
           <tr>
