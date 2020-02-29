@@ -3,7 +3,7 @@
 $logo = config('app.client_logo');
 @endphp
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light sq1dashboard-navbar">
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light sq1dashboard-navbar">
 
   <a class="navbar-brand sidebar-toggle d-none"  href="#">
     <i class="material-icons">menu</i>
@@ -72,6 +72,11 @@ $logo = config('app.client_logo');
                    <a class="dropdown-item" href="{{ route('profile') }}">
                     Change Profile
                   </a> --}}
+
+                <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ route('punk.profile') }}">
+                      Change Profile
+                  </a>
 
                 <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{ route('logout') }}"

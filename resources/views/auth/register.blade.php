@@ -1,15 +1,32 @@
 @extends('layouts.punk')
 
+@push('styles')
+ <style>
+ main {
+   margin-left: 0;
+ }
+ </style>
+@endpush
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center pt-5">
         <div class="col-md-8">
+          @if (session('status'))
+          <div class="alert alert-success alert-dismissible hide show mt-3" role="alert">
+            Hello! <strong>{{ ucfirst(auth()->user()->name) }}</strong> New Manager has been Created...
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        @endif
+
+
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('punk.storeregister') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -33,23 +50,6 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
-
-                            <div class="col-md-6">
-                              <select class="custom-select" name="role" id="role" required>
-                               <option selected disabled value="">Choose...</option>
-                               <option value="manager">Manager</option>
-                               <option value="user">User</option>
-
-                             </select>
-                                @error('role')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -84,7 +84,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
+
                             </div>
+
                         </div>
                     </form>
                 </div>

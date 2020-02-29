@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Stock extends Model
@@ -21,5 +21,14 @@ class Stock extends Model
   {
       return Carbon::parse($this->created_at)->format('Y M d');
   }
-  
+
+  /**
+   * Get the Stock record associated with the user.
+   */
+  public function getInsertAttribute()
+  {
+      return Carbon::parse($this->insert_date)->format('Y M d');
+  }
+
+
 }

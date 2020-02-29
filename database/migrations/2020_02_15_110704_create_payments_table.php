@@ -16,12 +16,17 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->enum('type', ['paytm', 'cash','checque', 'card'])->nullable();
+            $table->enum('tank', ['a1', 'a2', 'b1', 'b2'])->nullable();
+            $table->string('shift')->nullable();
+            $table->string('shift_time')->nullable();
             $table->enum('fuel', ['petrol', 'diesel', 'speed'])->nullable();
-            $table->unsignedInteger('in_amount')->nullable();
-            $table->unsignedInteger('out_amount')->nullable();
+            $table->unsignedInteger('cash')->nullable();
+            $table->unsignedInteger('checque')->nullable();
+            $table->unsignedInteger('card')->nullable();
+            $table->unsignedInteger('paytm')->nullable();
             $table->string('comment')->nullable();
-            $table->unsignedInteger('bal_amt')->nullable();
+            $table->string('bal_amt')->nullable();
+            $table->date('insert_date')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

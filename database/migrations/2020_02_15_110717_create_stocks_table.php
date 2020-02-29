@@ -20,7 +20,8 @@ class CreateStocksTable extends Migration
             $table->unsignedInteger('in_stock')->nullable();
             $table->unsignedInteger('out_stock')->nullable();
             $table->string('comment')->nullable();
-            $table->unsignedInteger('bal_stock')->nullable();
+            $table->string('bal_stock')->nullable();
+            $table->date('insert_date')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

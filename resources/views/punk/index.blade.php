@@ -3,9 +3,44 @@
 @section('content')
 <div class="container">
     <div class="row">
-      
+
+      <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card">
+                    <a href="{{ route('punk.todayprice') }}">
+                    <div class="card-body">
+                      <h4 class="card-title float-left text-justify mt-4">Petrol Price</h4>
+                      <h1 class="todayprice float-right"> {{ $todaypetrol }} </h1>
+                    </div>
+                  </a>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <a href="{{ route('punk.todayprice') }}">
+                    <div class="card-body">
+                      <h4 class="card-title float-left text-justify mt-4">Diesel Price</h4>
+                      <h1 class="todayprice float-right"> {{ $todaydiesel }} </h1>
+                    </div>
+                  </a>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card">
+                    <a href="{{ route('punk.todayprice') }}">
+                    <div class="card-body">
+                      <h4 class="card-title float-left text-justify mt-4">Speed Price</h4>
+                      <h1 class="todayprice float-right"> {{ $todayspeed }} </h1>
+                    </div>
+                  </a>
+                  </div>
+                </div>
+              </div>
+          </div>
+
         @if(auth()->user()->role == 'admin')
-        <div class="col-md-12">
+        <div class="col-md-12 pt-4">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="card">
@@ -42,14 +77,14 @@
                 </div>
             </div>
             @else
-            <div class="col-md-12">
+            <div class="col-md-12 pt-4">
                     <div class="row">
                       <div class="col-md-4">
                         <div class="card">
                           <div class="card-body">
                             <h5 class="card-title">Fuel</h5>
-                            <p class="card-text">Your Total Petrol Reading Value : {{ auth()->user()->dieselread() }} </p>
-                            <p class="card-text">Your Total Diesel Reading Value : {{ auth()->user()->petrolread() }}</p>
+                            <p class="card-text">Your Total Petrol Reading Value : {{ auth()->user()->petrolread() }}</p>
+                            <p class="card-text">Your Total Diesel Reading Value : {{ auth()->user()->dieselread() }} </p>
                             <a href="{{ route('punk.fuel') }}" class="btn btn-primary">Go Add Fuel</a>
                           </div>
                         </div>

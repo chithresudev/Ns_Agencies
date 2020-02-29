@@ -74,7 +74,7 @@ class User extends Authenticatable
      */
     public function dieselpayment()
     {
-        return $this->payments->where('fuel', 'diesel')->sum('in_amount');
+        return $this->payments->where('fuel', 'diesel')->sum('bal_amt');
     }
 
     /**
@@ -82,15 +82,15 @@ class User extends Authenticatable
      */
     public function petrolpayment()
     {
-        return $this->payments->where('fuel', 'petrol')->sum('in_amount');
+        return $this->payments->where('fuel', 'petrol')->sum('bal_amt');
     }
 
     /**
-     * Get the Payment record associated with the user.
+     * Get the Stocks record associated with the user.
      */
     public function stocks()
     {
-        return $this->hasMany('App\Payment');
+        return $this->hasMany('App\Stock');
     }
 
     /**

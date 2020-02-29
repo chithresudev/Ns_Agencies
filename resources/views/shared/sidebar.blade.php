@@ -32,6 +32,22 @@
                 Stock
             </a>
         </li>
-      
+
+      @if (auth()->user()->role == 'admin')
+        <li class="nav-item">
+            <a href="{{ route('punk.users') }}" class="nav-link {{ $route == 'punk.users' || $route == 'punk.register' ? 'custom-active' : '' }} " data-parent="#sidebar">
+                <i class="fa fa-user"></i>
+               Managers
+            </a>
+        </li>
+      @endif
+
+        <li class="nav-item">
+            <a href="{{ route('punk.todayprice') }}" class="nav-link {{ $route == 'punk.todayprice'  ? 'custom-active' : '' }} " data-parent="#sidebar">
+                <i class="fa fa-history"></i>
+               Today Price
+            </a>
+        </li>
+
     </ul>
 </div>

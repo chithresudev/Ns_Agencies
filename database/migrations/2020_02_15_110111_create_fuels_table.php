@@ -23,6 +23,7 @@ class CreateFuelsTable extends Migration
             $table->unsignedInteger('price')->nullable();
             $table->string('read_value')->nullable();
             $table->unsignedInteger('total_amt')->nullable();
+            $table->date('insert_date')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

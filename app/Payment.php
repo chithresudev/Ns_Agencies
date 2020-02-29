@@ -23,6 +23,15 @@ class Payment extends Model
       return Carbon::parse($this->created_at)->format('Y M d');
   }
 
+  /**
+   * Get the Payment record associated with the user.
+   */
+  public function getInsertAttribute()
+  {
+      return Carbon::parse($this->insert_date)->format('Y M d');
+  }
+
+
 
 
 }

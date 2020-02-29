@@ -75,6 +75,11 @@
     cursor: pointer;
 }
 
+.todayprice {
+  font-size: 65px;
+  color : #ff8100;
+}
+
 /* 5.Navbar
    ======================================================================================================================================= */
 header .sq1dashboard-navbar {
@@ -174,6 +179,7 @@ hr {
 main {
   margin-left: 167px;
   padding: 8px;
+  margin-top: 70px;
 }
 
 aside {

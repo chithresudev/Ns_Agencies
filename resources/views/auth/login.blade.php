@@ -2,6 +2,11 @@
 
 @push('styles')
  <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+ <style>
+ main {
+   margin-left: 0;
+ }
+ </style>
 @endpush
 
 @section('content')
@@ -65,9 +70,10 @@
                     </div>
                   </div>
                   <div class="mx-auto">
-                    <a class="" href="{{ route('register') }}">{{ __('  Create an new account') }}</a>
+                    {{-- <a class="text-info" href="{{ route('register') }}">{{ __('  Create an new account') }}</a> --}}
                   </div>
-                  <a class="btn btn-link" href="{{ route('password.request') }}">
+
+                  <a class="text-center pt-2" href="{{ route('password.request') }}">
                                    {{ __('Forgot Your Password?') }}
                                </a>
                 </div>

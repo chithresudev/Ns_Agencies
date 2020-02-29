@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Fuel;
 use App\Payment;
 use App\Stock;
+use App\User;
+use App\Todayprice;
+use Carbon\Carbon;
+use Validator;
+use Illuminate\Support\Facades\Hash;
 use Elibyy\TCPDF\Facades\TCPDF;
 use Illuminate\Http\Request;
 
@@ -28,6 +33,8 @@ class PunkController extends Controller
      */
     public function index()
     {
+      $today_price = Todayprice::where('date', Carbon::today())->first();
+
       if (auth()->user()->role == 'admin') {
         $petrol_read = Fuel::where('fuel', 'petrol')->sum('read_value');
         $diesel_read = Fuel::where('fuel', 'diesel')->sum('read_value');
@@ -43,10 +50,19 @@ class PunkController extends Controller
           'diesel_payment' => $diesel_payment,
           'in_petrol_stock' => $in_petrol_stock,
           'in_diesel_stock' => $in_diesel_stock,
+          'todaypetrol' => $today_price->petrol ?? 0,
+          'todaydiesel' => $today_price->diesel ?? 0,
+          'todayspeed' => $today_price->speed ?? 0,
         ];
         return view('punk.index', $summary);
       }
-         return view('punk.index');
+        $summary = [
+        'todaypetrol' => $today_price->petrol ?? 0,
+        'todaydiesel' => $today_price->diesel ?? 0,
+        'todayspeed' => $today_price->speed ?? 0,
+      ];
+
+         return view('punk.index', $summary);
     }
 
     /**
@@ -56,7 +72,10 @@ class PunkController extends Controller
      */
     public function fuel()
     {
-         return view('punk.fuel');
+      $request = app('request');
+      $today_price = Todayprice::where('date', Carbon::parse($request->date))->first();
+
+         return view('punk.fuel', ['today_price' => $today_price]);
     }
 
     /**
@@ -74,6 +93,7 @@ class PunkController extends Controller
           'price' => 'required|numeric',
           'reading_value' => 'required',
           'total_amt' => 'required|numeric',
+          'insert_date' => 'required|date',
       ]);
 
       $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
@@ -88,9 +108,44 @@ class PunkController extends Controller
       $fuel->price = $request->price;
       $fuel->read_value = $request->reading_value;
       $fuel->total_amt = $request->total_amt;
+      $fuel->insert_date = $request->insert_date;
       $fuel->save();
 
       return back()->with('status', 'ok');
+    }
+
+    /**
+     * Store the Fuel Form.
+     *
+     * @return void
+     */
+    public function fuelUpdate(Fuel $fuel, Request $request)
+    {
+
+      $request->validate([
+          'tank' => 'required',
+          'shift' => 'required',
+          'fuel' => 'required',
+          'price' => 'required|numeric',
+          'reading_value' => 'required',
+          'total_amt' => 'required|numeric',
+          'insert_date' => 'required|date',
+      ]);
+
+      $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
+      $shit_time = ($request->shift_time == 'custom_time') ? $custom :  $request->shift_time;
+
+      $fuel->tank = $request->tank;
+      $fuel->shift = $request->shift;
+      $fuel->shift_time = $shit_time;
+      $fuel->fuel = $request->fuel;
+      $fuel->price = $request->price;
+      $fuel->read_value = $request->reading_value;
+      $fuel->total_amt = $request->total_amt;
+      $fuel->insert_date = $request->insert_date;
+      $fuel->save();
+
+      return back()->with('updatestatus', 'ok');
     }
 
     /**
@@ -100,6 +155,7 @@ class PunkController extends Controller
      */
     public function payment()
     {
+
          return view('punk.payment');
     }
 
@@ -112,23 +168,75 @@ class PunkController extends Controller
     {
 
       $request->validate([
-          'payment' => 'required',
+          'tank' => 'required',
+          'shift' => 'required',
           'fuel' => 'required',
-          'in_amount' => 'required|numeric',
-          'out_amount' => 'required|numeric'
+          'insert_date' => 'required|date',
+          'paytm' => 'numeric',
+          'cash' => 'numeric',
+          'checque' => 'numeric',
+          'card' => 'numeric'
       ]);
+
+      $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
+      $shit_time = ($request->shift_time == 'custom_time') ? $custom :  $request->shift_time;
 
       $payment = new Payment();
       $payment->user_id = auth()->user()->id;
-      $payment->type = $request->payment;
+      $payment->tank = $request->tank;
+      $payment->shift = $request->shift;
+      $payment->shift_time = $shit_time;
       $payment->fuel = $request->fuel;
-      $payment->in_amount = $request->in_amount;
-      $payment->out_amount = $request->out_amount;
+
+      $payment->cash = $request->cash;
+      $payment->checque = $request->checque;
+      $payment->card = $request->card;
+      $payment->paytm = $request->paytm;
       $payment->comment = $request->comment;
       $payment->bal_amt = $request->bal_amt;
+      $payment->insert_date = $request->insert_date;
       $payment->save();
 
       return back()->with('status', 'ok');
+    }
+
+    /**
+     * Store the Payment from Form.
+     *
+     * @return void
+     */
+    public function paymentUpdate(Payment $payment, Request $request)
+    {
+
+      $request->validate([
+          'tank' => 'required',
+          'shift' => 'required',
+          'fuel' => 'required',
+          'insert_date' => 'required|date',
+          'paytm' => 'numeric',
+          'cash' => 'numeric',
+          'checque' => 'numeric',
+          'card' => 'numeric'
+      ]);
+
+      $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
+      $shift_time = ($request->shift_time == 'custom_time') ? $custom :  $request->shift_time;
+
+      $payment->tank = $request->tank;
+      $payment->shift = $request->shift;
+      $payment->shift_time = $shift_time;
+      $payment->fuel = $request->fuel;
+
+      $payment->cash = $request->cash;
+      $payment->checque = $request->checque;
+      $payment->card = $request->card;
+      $payment->paytm = $request->paytm;
+      $payment->comment = $request->comment;
+      $payment->bal_amt = $request->bal_amt;
+      $payment->insert_date = $request->insert_date;
+      $payment->save();
+
+      return back()->with('[updatestatus', 'ok');
     }
 
     /**
@@ -138,7 +246,17 @@ class PunkController extends Controller
      */
     public function stock()
     {
-         return view('punk.stock');
+      $request = app('request');
+
+      if($request) {
+        $yesterday = Carbon::parse($request->date)->subDay(1)->startOfDay();
+        $balance = Stock::where('fuel', $request->fuel)->where('insert_date', $yesterday)->first();
+
+      } else {
+
+        $balance = Stock::where('insert_date', Carbon::yesterday())->first();
+      }
+      return view('punk.stock', ['balance' => $balance]);
     }
 
     /**
@@ -152,6 +270,7 @@ class PunkController extends Controller
           'fuel' => 'required',
           'in_stock' => 'required|numeric',
           'out_stock' => 'required|numeric',
+          'insert_date' => 'required|date',
       ]);
 
       $payment = new Stock();
@@ -161,9 +280,35 @@ class PunkController extends Controller
       $payment->out_stock = $request->out_stock;
       $payment->comment = $request->comment;
       $payment->bal_stock = $request->bal_stock;
+      $payment->insert_date = $request->insert_date;
       $payment->save();
 
       return back()->with('status', 'ok');
+    }
+
+    /**
+     * Store the Payment from Form.
+     *
+     * @return void
+     */
+    public function stockUpdate(Stock $stock, Request $request)
+    {
+      $request->validate([
+          'fuel' => 'required',
+          'in_stock' => 'required|numeric',
+          'out_stock' => 'required|numeric',
+          'insert_date' => 'required|date',
+      ]);
+
+      $stock->fuel = $request->fuel;
+      $stock->in_stock = $request->in_stock;
+      $stock->out_stock = $request->out_stock;
+      $stock->comment = $request->comment;
+      $stock->bal_stock = $request->bal_stock;
+      $stock->insert_date = $request->insert_date;
+      $stock->save();
+
+      return back()->with('updatestatus', 'ok');
     }
 
     /**
@@ -174,24 +319,24 @@ class PunkController extends Controller
     public function fuelView(Request $request)
     {
 
-      if ($request->has('fuel')) {
+      if ($request->has('tank')) {
 
-         if($request->from == null && $request->to == null && $request->fuel=='all') {
+         if($request->from == null && $request->to == null && $request->tank=='all') {
            $fuels = Fuel::get();
          }
 
-         else if($request->from != null && $request->to != null && $request->fuel=='all') {
-           $fuels = Fuel::whereBetween('created_at', [$request->from, $request->to])
+         else if($request->from != null && $request->to != null && $request->tank=='all') {
+           $fuels = Fuel::whereBetween('insert_date', [$request->from, $request->to])
                            ->get();
          }
 
-         else if($request->from != null && $request->to != null && $request->fuel!='all') {
-           $fuels = Fuel::where('fuel', $request->fuel)->whereBetween('created_at', [$request->from, $request->to])
+         else if($request->from != null && $request->to != null && $request->tank!='all') {
+           $fuels = Fuel::where('tank', $request->tank)->whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
          else {
-           $fuels = Fuel::where('fuel', $request->fuel)->get();
+           $fuels = Fuel::where('tank', $request->tank)->get();
 
          }
 
@@ -208,35 +353,44 @@ class PunkController extends Controller
     public function paymentView(Request $request)
     {
 
-
-         if($request->from == null && $request->to == null && $request->fuel=='all' && $request->payment=='all') {
+         if($request->from == null && $request->to == null && $request->tank=='all') {
            $payments = Payment::get();
          }
 
-         else if($request->from == null && $request->to == null && $request->fuel=='all' && $request->payment!='all') {
-           $payments = Payment::where('type', $request->payment)->get();
-         }
-
-         else if($request->from != null && $request->to != null && $request->fuel=='all' && $request->payment=='all') {
-           $payments = Payment::whereBetween('created_at', [$request->from, $request->to])
-                           ->get();
-         }
-
-         else if($request->from != null && $request->to != null && $request->fuel!='all' && $request->payment=='all') {
-           $payments = Payment::where('fuel', $request->fuel)->whereBetween('created_at', [$request->from, $request->to])
+         else if($request->from != null && $request->to != null && $request->tank!='all') {
+           $payments = Payment::where('tank', $request->tank)->whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
-         else if($request->from != null && $request->to != null && $request->fuel!='all' && $request->payment!='all') {
-           $payments = Payment::where('fuel', $request->fuel)->where('type', $request->payment)->whereBetween('created_at', [$request->from, $request->to])
+         else if($request->from != null && $request->to != null && $request->tank=='all') {
+           $payments = Payment::where('tank', $request->tank)->whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
 
          else {
-           $payments = Payment::where('fuel', $request->fuel)->get();
+           $payments = Payment::where('tank', $request->tank)->get();
 
          }
+         // if($request->from == null && $request->to == null && $request->fuel=='all') {
+         //   $payments = Payment::get();
+         // }
+         //
+         // else if($request->from != null && $request->to != null && $request->fuel!='all') {
+         //   $payments = Payment::where('fuel', $request->fuel)->whereBetween('insert_date', [$request->from, $request->to])
+         //                      ->get();
+         // }
+         //
+         // else if($request->from != null && $request->to != null && $request->fuel=='all') {
+         //   $payments = Payment::where('fuel', $request->fuel)->whereBetween('insert_date', [$request->from, $request->to])
+         //                      ->get();
+         // }
+         //
+         //
+         // else {
+         //   $payments = Payment::where('fuel', $request->fuel)->get();
+         //
+         // }
 
 
 
@@ -257,12 +411,12 @@ class PunkController extends Controller
          }
 
          else if($request->from != null && $request->to != null && $request->fuel=='all') {
-           $stocks = Stock::whereBetween('created_at', [$request->from, $request->to])
+           $stocks = Stock::whereBetween('insert_date', [$request->from, $request->to])
                            ->get();
          }
 
          else if($request->from != null && $request->to != null && $request->fuel!='all') {
-           $stocks = Stock::where('fuel', $request->fuel)->whereBetween('created_at', [$request->from, $request->to])
+           $stocks = Stock::where('fuel', $request->fuel)->whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
@@ -278,55 +432,146 @@ class PunkController extends Controller
     }
 
 
-    public function tcpdfFuel(Request $request)
+    public function riseQuery(Request $request)
+    {
+        $riseQuery = new RiseQuery();
+        $riseQuery->user_id = auth()->user()->id;
+        $riseQuery->module = $request->module;
+        $riseQuery->comment = $request->comment;
+        $riseQuery->save();
+        return back();
+
+
+    }
+
+    public function remove($value='')
+    {
+        $request = app('request');
+
+        if ($request->module == 'fuel') {
+          $remove = Fuel::find($request->fuel_id)->delete();
+        }
+
+        if ($request->module == 'payment') {
+          $remove = Payment::find($request->payment_id)->delete();
+        }
+
+        if ($request->module == 'stock') {
+          $remove = Stock::find($request->stock_id)->delete();
+        }
+
+        if ($request->module == 'users') {
+          $remove = User::find($request->user_id)->delete();
+        }
+
+        if ($request->module == 'todayprice') {
+          $remove = Todayprice::find($request->id)->delete();
+        }
+
+        return back()->with('removestatus', 'ok');
+
+    }
+
+    public function profile()
+    {
+       return view('auth.change-profile');
+    }
+
+    public function profileUpdate(User $user, Request $request)
     {
 
-      $fuels = Fuel::whereIn('id', $request->print)->get();
-      $fual_data = '<table style="border:1px solid">
-          <tr>
-          <th>ID</th>
-          <th>Tank</th>
-          <th>Shift</th>
-          <th>Fuel</th>
-          <th>Price</th>
-          <th>Reading</th>
-          <th>Total</th>
-          <th>Fuel At</th>
-          </tr>';
-
-      foreach ($fuels as $key => $fuel) {
-
-         $fual_data .= '
-         <tr>
-         <td>' . $fuel->id . '</td>
-         <td>' . ucfirst($fuel->tank) . '</td>
-         <td>' . ucfirst(str_replace('_', ' ', $fuel->shift)) . '</td>
-         <td>' . ucfirst($fuel->fuel) . '</td>
-         <td>' . $fuel->price . '</td>
-         <td>' . $fuel->read_value . '</td>
-         <td>' . $fuel->total_amt . '</td>
-         <td>' . $fuel->created_at . '</td>
-         </tr>';
-       }
+      $validator = Validator::make($request->all(), [
+         'name' => 'required|string',
+         'email' => 'required|email',
+         'old_password' => 'required|string|min:8',
+         'password' => 'required|string|min:8|regex:/^\S*$/u',
+         'password_confirmation' => 'required|string|min:6|same:password',
+      ]);
 
 
-         $pdf = new TCPDF();
-         $pdf::AddPage();
+      if ($validator->fails()) {
+          return back()->withErrors($validator)->withInput();
+      }
 
-         $xPos = [];
+      $user = auth()->user();
 
-        $current_y_position = $pdf::getY();
-        $pdf::writeHTMLCell(0, 40, 0, 0, $fual_data, 0, 1, 0);
-        $pdf::Output('kovil.pdf');
+      if (Hash::check($request->old_password, $user->password)) {
+          $user->password = Hash::make($request->password);
+          $user->save();
+     } else {
+         return back()->withInput()->withErrors([
+           'old_password' => 'You have entered wrong password'
+         ]);
+     }
+
+        return back()->with('updatestatus', 'ok');
+    }
 
 
-      //
-      // $html = '<h1>'. str_replace(',', "<br/>" , $request->print . '</h1>';
-      //
-      //   PDF::SetTitle('Petrol Punk');
-      //   PDF::AddPage();
-      //   PDF::writeHTML($html . ',' ,10);
-      //   PDF::Output('hello_world.pdf');
+    public function users()
+    {
+        $users = User::whereNotIn('role', ['admin'])->get();
+       return view('auth.users', ['users' => $users]);
+    }
+
+
+    public function register()
+    {
+       return view('auth.register');
+    }
+
+    public function storeRegister(Request $request)
+    {
+      $validator = Validator::make($request->all(), [
+        'name' => 'required|string',
+        'email' => 'required|string|email|unique:users',
+        'password' => 'required|string|min:8|confirmed'
+      ]);
+
+
+      if ($validator->fails()) {
+          return back()->withErrors($validator)->withInput();
+      }
+
+     $user = User::create([
+          'name' => $request->name,
+          'email' => $request->email,
+          'role' => 'manager',
+          'password' => Hash::make($request->password),
+      ]);
+      return back()->with('status', 'ok');
+
+    }
+
+    public function todayPrice()
+    {
+        $today_prices = Todayprice::paginate(10);
+        return view('punk.todayprice', ['todayprices' => $today_prices]);
+    }
+
+    public function todayPriceStore(Request $request)
+    {
+
+      $validator = Validator::make($request->all(), [
+        'petrol' => 'required|numeric',
+        'diesel' => 'required|numeric',
+        'speed' => 'required|numeric',
+        'date' => 'required|date|unique:todayprices',
+      ]);
+
+
+      if ($validator->fails()) {
+          return back()->withErrors($validator)->withInput();
+      }
+
+       $today_price = new Todayprice;
+       $today_price->petrol = $request->petrol;
+       $today_price->diesel = $request->diesel;
+       $today_price->speed = $request->speed;
+       $today_price->date = $request->date;
+       $today_price->save();
+
+      return back()->with('status', 'ok');
 
     }
 
