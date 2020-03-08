@@ -45,42 +45,17 @@ $ids = [];
                         <input type="date" name="to" value="{{ $request->to }}" class="form-control">
                         </div>
                     </div>
-                          <!-- <div class="form-group inline-block row">
-                          <label for="fuel" class="col-md-4 col-form-label text-md-right">
-                            FUEL
-                          </label>
-                          <div class="col-md-6 p-2">
-
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" required {{ $request->fuel == 'petrol' ? 'checked' : '' }}  type="radio" name="fuel" id="petrol" value="petrol">
-                                <label class="form-check-label" for="petrol">Petrol</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" required {{ $request->fuel == 'diesel' ? 'checked' : '' }}  type="radio" name="fuel" id="diesel" value="diesel">
-                                <label class="form-check-label" for="diesel">Diesel</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" required {{ $request->fuel == 'speed' ? 'checked' : '' }}  type="radio" name="fuel" id="speed" value="speed">
-                                <label class="form-check-label" for="speed">Speed</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" required  {{ $request->fuel == 'all' || $request->fuel == ' ' ? 'checked' : '' }}  type="radio" name="fuel" id="all" value="all">
-                                <label class="form-check-label" for="all">All</label>
-                              </div>
-
-                          </div>
-                      </div> -->
 
                       <div class="form-group row">
-                          <label for="tank" class="col-md-4 col-form-label text-md-right">MPD</label>
+                          <label for="mpd" class="col-md-4 col-form-label text-md-right">MPD</label>
                           <div class="col-md-6">
-                            <select class="custom-select @error('tank') is-invalid @enderror" name="tank" id="tank" required>
+                            <select class="custom-select @error('mpd') is-invalid @enderror" name="mpd" id="mpd" required>
                              <option selected disabled value="">Choose...</option>
-                             <option {{ $request->tank == 'a1' ? 'selected' : '' }} value="a1">MPD A1</option>
-                             <option {{ $request->tank == 'a2' ? 'selected' : '' }} value="a2">MPD A2</option>
-                             <option {{ $request->tank == 'b1' ? 'selected' : '' }} value="b1">MPD B1</option>
-                             <option {{ $request->tank == 'b2' ? 'selected' : '' }} value="b2">MPD B2</option>
-                             <option {{ $request->tank == 'all' ? 'selected' : '' }} value="all">MPD All</option>
+                             <option {{ $request->mpd == 'mpd1' ? 'selected' : '' }} value="mpd1">MPD 1</option>
+                             <option {{ $request->mpd == 'mpd2' ? 'selected' : '' }} value="mpd2">MPD 2</option>
+                             <option {{ $request->mpd == 'mpd3' ? 'selected' : '' }} value="mpd3">MPD 3</option>
+                             <option {{ $request->mpd == 'mpd4' ? 'selected' : '' }} value="mpd4">MPD 4</option>
+                             <option {{ $request->mpd == 'all' ? 'selected' : '' }} value="all">MPD All</option>
                            </select>
 
                           </div>
@@ -104,7 +79,7 @@ $ids = [];
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">MPD</th>
-                    <th scope="col">Shift</th>
+                    <th scope="col">Filler</th>
                     <th scope="col">Fuel</th>
                     <th scope="col">Day Price</th>
                     <th scope="col">Reading Price</th>
@@ -123,8 +98,8 @@ $ids = [];
                      array_push($ids, $fuel->id);
                      @endphp
                     <th scope="row">{{ $key + 1 }}</th>
-                    <td>{{ ucfirst($fuel->tank) }}</td>
-                    <td>{{ ucfirst(str_replace('_', ' ', $fuel->shift)) }}</td>
+                    <td class="text-uppercase">{{ ucfirst($fuel->mpd) }}</td>
+                    <td class="text-uppercase">{{ ucfirst($fuel->filler) }}</td>
                     <td>{{ ucfirst($fuel->fuel) }}</td>
                     <td>{{ $fuel->price }}</td>
                     <td>{{ $fuel->read_value }}</td>
@@ -168,14 +143,14 @@ $ids = [];
                         <div class="form-group row">
                             <label for="tank" class="col-md-4 col-form-label text-md-right text-info">MPD</label>
                             <div class="col-md-6">
-                              <select class="custom-select @error('tank') is-invalid @enderror" name="tank" id="tank" required>
+                              <select class="custom-select @error('mpd') is-invalid @enderror" name="mpd" id="mpd" required>
                                <option selected disabled value="">Choose...</option>
-                               <option {{ $fuel->tank == 'a1' ? 'selected' : '' }} value="a1">MPD A1</option>
-                               <option {{ $fuel->tank == 'a2' ? 'selected' : '' }} value="a2">MPD A2</option>
-                               <option {{ $fuel->tank == 'b1' ? 'selected' : '' }} value="b1">MPD B1</option>
-                               <option {{ $fuel->tank == 'b2' ? 'selected' : '' }} value="b2">MPD B2</option>
+                               <option {{ $fuel->mpd == 'mpd1' ? 'selected' : '' }} value="mpd1">MPD 1</option>
+                               <option {{ $fuel->mpd == 'mpd2' ? 'selected' : '' }} value="mpd2">MPD 2</option>
+                               <option {{ $fuel->mpd == 'mpd3' ? 'selected' : '' }} value="mpd3">MPD 3</option>
+                               <option {{ $fuel->mpd == 'mpd4' ? 'selected' : '' }} value="mpd4">MPD 4</option>
                              </select>
-                             @error('tank')
+                             @error('mpd')
                                  <span class="invalid-feedback" role="alert">
                                      <strong>{{ $message }}</strong>
                                  </span>
@@ -183,36 +158,22 @@ $ids = [];
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="shift" class="col-md-4 col-form-label text-md-right text-info">Shift</label>
 
+                        <div class="form-group row">
+                            <label for="tank" class="col-md-4 col-form-label text-md-right text-info">Filler</label>
                             <div class="col-md-6">
-                              <select class="custom-select @error('shift') is-invalid @enderror" name="shift" id="shift" required>
+                              <select class="custom-select @error('filler') is-invalid @enderror" name="filler" id="filler" required>
                                <option selected disabled value="">Choose...</option>
-                               <option {{ $fuel->shift == 'shift_1' ? 'selected' : '' }} value="shift_1">Shift 1</option>
-                               <option {{ $fuel->shift == 'shift_2' ? 'selected' : '' }} value="shift_2">Shift 2</option>
-                               <option {{ $fuel->shift == 'shift_3' ? 'selected' : '' }} value="shift_3">Shift 3</option>
-                               <option {{ $fuel->shift == 'shift_4' ? 'selected' : '' }} value="shift_4">Shift 4</option>
+                               <option {{ $fuel->filler == 'a1' ? 'selected' : '' }} value="a1">A1</option>
+                               <option {{ $fuel->filler == 'a2' ? 'selected' : '' }} value="a2">A2</option>
+                               <option {{ $fuel->filler == 'b1' ? 'selected' : '' }} value="b1">B1</option>
+                               <option {{ $fuel->filler == 'b2' ? 'selected' : '' }} value="b2">B2</option>
                              </select>
-                             @error('shift')
+                             @error('filler')
                                  <span class="invalid-feedback" role="alert">
                                      <strong>{{ $message }}</strong>
                                  </span>
                              @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="shit_time" class="col-md-4 col-form-label text-md-right text-info">Shift Timing</label>
-
-                            <div class="col-md-6">
-                              <select class="custom-select" name="shift_time" id="shift_time" required>
-                               <option selected disabled value="">Choose...</option>
-                               <option {{ $fuel->shift_time == '9am_to_9pm' ? 'selected' : '' }} value="9am_to_9pm">9AM to 9PM</option>
-                               <option {{ $fuel->shift_time == '6am_to_2pm' ? 'selected' : '' }} value="6am_to_2pm">6AM to 2PM</option>
-                               <option {{ $fuel->shift_time == '2pm_to_9pm' ? 'selected' : '' }} value="2pm_to_9pm">2Pm to 9PM</option>
-                               <option {{ $fuel->shift_time == '9pm_to_6am' ? 'selected' : '' }} value="9pm_to_6am">9PM to 6AM</option>
-                           </select>
                             </div>
                         </div>
 
@@ -249,7 +210,7 @@ $ids = [];
                         <div class="form-group row">
                             <label for="price" class="col-md-4 col-form-label text-md-right text-info">Today Price</label>
                             <div class="col-md-6">
-                                <input id="price_{{ $fuel->id }}" type="text" value="{{ $fuel->price }}" required class="form-control @error('price') is-invalid @enderror" name="price">
+                                <input id="editpriceval_{{ $key + 1 }}" type="text" value="{{ $fuel->price }}" required class="form-control @error('price') is-invalid @enderror" name="price">
 
                                 @error('price')
                                     <span class="invalid-feedback" role="alert">
@@ -262,7 +223,7 @@ $ids = [];
                         <div class="form-group row">
                             <label for="reading_value" class="col-md-4 col-form-label text-md-right text-info">Today Reading Value</label>
                             <div class="col-md-6">
-                                <input id="reading_value_{{ $fuel->id }}" type="text" value="{{ $fuel->read_value }}" required class="form-control @error('reading_value') is-invalid @enderror" name="reading_value">
+                                <input id="editreading_value_{{ $key + 1 }}" type="text" value="{{ $fuel->read_value }}" required class="form-control @error('reading_value') is-invalid @enderror" name="reading_value">
 
                                 @error('reading_value')
                                     <span class="invalid-feedback" role="alert">
@@ -274,8 +235,8 @@ $ids = [];
 
                           <div class="form-group row">
                               <label for="total_amt" class="col-md-4 col-form-label text-md-right text-info">Today Balance Amount</label>
-                              <label id="total_amt_{{ $fuel->id }}" class="col-md-6 col-form-label ">{{ $fuel->total_amt }}</label>
-                              <input id="total_bal_amt_{{ $fuel->id }}" type="hidden" value="{{ $fuel->total_amt }}" name="total_amt" required class="form-control">
+                              <label id="total_amt_{{ $key + 1 }}" class="col-md-6 col-form-label ">{{ $fuel->total_amt }}</label>
+                              <input id="total_bal_amt_{{ $key + 1 }}" type="hidden" value="{{ $fuel->total_amt }}" name="total_amt" required class="form-control">
 
                           </div>
                         <div class="form-group row">
@@ -354,89 +315,34 @@ $ids = [];
                          </div>
 
                          <div class="form-group row">
-                             <label for="tank" class="col-md-4 col-form-label text-md-right text-info">MPD</label>
+                             <label for="mpd" class="col-md-4 col-form-label text-md-right text-info">MPD</label>
                              <div class="col-md-6">
-                               <select class="custom-select @error('tank') is-invalid @enderror" name="tank" id="tank" required>
+                               <select class="custom-select @error('mpd') is-invalid @enderror" name="mpd" id="mpd" required>
                                 <option selected disabled value="">Choose...</option>
-                                <option value="a1">MPD A1</option>
-                                <option value="a2">MPD A2</option>
-                                <option value="b1">MPD B1</option>
-                                <option value="b2">MPD B2</option>
-                              </select>
-                              @error('tank')
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong>{{ $message }}</strong>
-                                  </span>
-                              @enderror
+                                <option {{ $request->mpd == 'mpd1' ? 'selected' : '' }} value="mpd1">MPD 1</option>
+                                <option {{ $request->mpd == 'mpd2' ? 'selected' : '' }} value="mpd2">MPD 2</option>
+                                <option {{ $request->mpd == 'mpd3' ? 'selected' : '' }} value="mpd3">MPD 3</option>
+                                <option {{ $request->mpd == 'mpd4' ? 'selected' : '' }} value="mpd4">MPD 4</option>
+                            </select>
+
                              </div>
                          </div>
 
                          <div class="form-group row">
-                             <label for="shift" class="col-md-4 col-form-label text-md-right text-info">Shift</label>
-
+                             <label for="filler" class="col-md-4 col-form-label text-md-right text-info">Filler</label>
                              <div class="col-md-6">
-                               <select class="custom-select @error('shift') is-invalid @enderror" name="shift" id="shift" required>
+                               <select class="custom-select @error('filler') is-invalid @enderror" name="filler" id="filler" required>
                                 <option selected disabled value="">Choose...</option>
-                                <option value="shift_1">Shift 1</option>
-                                <option value="shift_2">Shift 2</option>
-                                <option value="shift_3">Shift 3</option>
-                                <option value="shift_4">Shift 4</option>
+                                <option value="a1">A1</option>
+                                <option value="a2">A2</option>
+                                <option value="b1">B1</option>
+                                <option value="b2">B2</option>
                               </select>
-                              @error('shift')
+                              @error('filler')
                                   <span class="invalid-feedback" role="alert">
                                       <strong>{{ $message }}</strong>
                                   </span>
                               @enderror
-                             </div>
-                         </div>
-
-                         <div class="form-group row">
-                             <label for="shit_time" class="col-md-4 col-form-label text-md-right text-info">Shift Timing</label>
-
-                             <div class="col-md-6">
-                               <select class="custom-select" name="shift_time" id="shift_time" required>
-                                <option selected disabled value="">Choose...</option>
-                                <option value="9am_to_9pm">9AM to 9PM</option>
-                                <option value="6am_to_2pm">6AM to 2PM</option>
-                                <option value="2pm_to_9pm">2Pm to 9PM</option>
-                                <option value="9pm_to_6am">9PM to 6AM</option>
-                                <option value="custom_time">Custom Timing</option>
-                              </select>
-                             </div>
-                         </div>
-
-                         <div class="form-group row d-none" id="custom_time_show">
-                             <label for="from_hr" class="col-md-4 col-form-label text-md-right text-danger">Custom Timing</label>
-
-                             <div class="col-md-6">
-                               <div class="input-group mb-3">
-                                 <div class="input-group-prepend">
-                                   <select class="custom-select rounded-left" name="from_hr" id="from_hr">
-                                     <option disabled selected>Choose...</option>
-                                     @for($i = 1; $i <=12; $i++)
-                                     <option value="{{ $i }}">{{ $i }}</option>
-                                     @endfor
-                                   </select>
-
-                                 <select class="custom-select" name="from_format" id="from_format">
-                                   <option disabled selected>Choose...</option>
-                                   <option value="am">AM</option>
-                                   <option value="pm">PM</option>
-                                 </select>
-                                  <span class="p-2"> TO </span>
-                                 <select class="custom-select" name="to_hr" id="to_hr">
-                                   <option disabled selected>Choose...</option>
-                                   @for($i = 1; $i <=12; $i++)
-                                   <option value="{{ $i }}">{{ $i }}</option>
-                                   @endfor
-                                 </select>
-                                 <select class="custom-select"  name="to_format" id="to_format">
-                                   <option disabled selected>Choose...</option>
-                                   <option value="am">AM</option>
-                                   <option value="pm">PM</option>
-                                 </select>
-                                   </div>
-                               </div>
                              </div>
                          </div>
 
@@ -475,7 +381,7 @@ $ids = [];
                              <label for="price" class="col-md-4 col-form-label text-md-right text-info">Today Price</label>
                              <div class="col-md-6 d-none" id="price_petrol">
                                  <input  disabled type="text" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->petrol ?? 0 }}">
-                                 <input id="price_"  type="hidden" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->petrol ?? 0 }}" name="price">
+                                 <input id="priceval_petrol"  type="hidden" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->petrol ?? 0 }}" name="price">
 
                                  @error('price')
                                      <span class="invalid-feedback" role="alert">
@@ -486,7 +392,7 @@ $ids = [];
 
                              <div class="col-md-6 d-none" id="price_diesel">
                                  <input  disabled type="text" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->diesel ?? 0 }}">
-                                 <input id="price_"  type="hidden" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->diesel ?? 0 }}" name="price">
+                                 <input id="priceval_diesel"  type="hidden" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->diesel ?? 0 }}" name="price">
 
                                  @error('price')
                                      <span class="invalid-feedback" role="alert">
@@ -497,7 +403,7 @@ $ids = [];
 
                              <div class="col-md-6 d-none" id="price_speed">
                                  <input  disabled type="text" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->speed ?? 0 }}">
-                                 <input id="price_"  type="hidden" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->speed ?? 0 }}" name="price">
+                                 <input id="priceval_speed"  type="hidden" required class="form-control @error('price') is-invalid @enderror" value="{{ $today_price->speed ?? 0 }}" name="price">
 
                                  @error('price')
                                      <span class="invalid-feedback" role="alert">
@@ -505,6 +411,11 @@ $ids = [];
                                      </span>
                                  @enderror
                              </div>
+                             @if(!$today_price)
+                             <div class="col-md-2">
+                                 <a href="{{ route('punk.todayprice') }}" class="btn btn-sm btn-success">Add Price</a>
+                             </div>
+                             @endif
 
                          </div>
 
@@ -557,7 +468,7 @@ $ids = [];
           <tr>
             <th scope="col">#</th>
             <th scope="col">MPD</th>
-            <th scope="col">Shift</th>
+            <th scope="col">Filler</th>
             <th scope="col">Fuel</th>
             <th scope="col">Day Price</th>
             <th scope="col">Reading Price</th>
@@ -572,8 +483,8 @@ $ids = [];
            <tr>
 
             <th scope="row">{{ $key + 1 }}</th>
-            <td>{{ ucfirst($fuel->tank) }}</td>
-            <td>{{ ucfirst($fuel->shift) }}</td>
+            <td class="text-uppercase">{{ $fuel->mpd }}</td>
+            <td>{{ ucfirst($fuel->filler) }}</td>
             <td>{{ ucfirst($fuel->fuel) }}</td>
             <td>{{ $fuel->price }}</td>
             <td>{{ $fuel->read_value }}</td>
@@ -602,63 +513,76 @@ $ids = [];
 <script>
 $(document).ready(function() {
 
-  $('#shift_time').change(function(){
-    var time_value = $(this).val();
-    if(time_value == 'custom_time') {
-      $('#custom_time_show').removeClass('d-none');
-      $('#from_hr, #from_format, #to_hr, #to_format').attr('required' , 'required');
-    }
-    else {
-      $('#custom_time_show').addClass('d-none');
-      $('#from_hr, #from_format, #to_hr, #to_format').removeAttr('required');
-    }
-  });
+  $('#mpd,#filler').change(function() {
+    var mpd = $('#mpd').val();
+    var filler = $('#filler').val();
+    $('#diesel, #petrol, #speed, #price_petrol, #price_speed, #price_diesel').addClass('d-none').find('input').removeAttr('checked');
 
-  $('#tank,#shift').change(function(){
-    var tank = $('#tank').val();
-    var shift = $('#shift').val();
-
-
-     if(tank == 'a1' && (shift == 'shift_1' || shift == 'shift_3') || tank == 'b1' && (shift == 'shift_2' || shift == 'shift_4'))
+     if((mpd == 'mpd1' || mpd == 'mpd2' || mpd == 'mpd3' || mpd == 'mpd4') && (filler == 'a1' || filler == 'b1'))
      {
        $('#detailshow').removeClass('d-none');
-       $('#petrol, #price_petrol').removeClass('d-none').find('input').attr('checked', 'checked');
+       $('#petrol, #price_petrol').removeClass('d-none').find('input[type=radio]').attr('checked', 'checked');
+       $('#petrol, #price_petrol').find('input[type=hidden]').removeAttr('disabled');
        $('#diesel, #speed, #price_speed, #price_diesel').addClass('d-none').find('input').removeAttr('checked');
+       $('#diesel, #speed, #price_speed, #price_diesel').find('input[type=hidden]').attr('disabled', 'disabled');
        $('#reading_value_,#total_bal_amt_').val('');
        $('#total_amt_').text(0);
        }
 
-     if(tank == 'a2' && shift == 'shift_1' || tank == 'b2' && shift == 'shift_2')
-     {
+    if((mpd == 'mpd1' || mpd == 'mpd2') && (filler == 'a2' || filler == 'b2'))
+       {
        $('#detailshow').removeClass('d-none');
-       $('#diesel, #price_diesel').removeClass('d-none').find('input').attr('checked', 'checked');
-       $('#petrol, #speed, #price_speed, #price_petrol').addClass('d-none').find('input').removeAttr('checked');
+       $('#diesel, #price_diesel').removeClass('d-none').find('input[type=radio]').attr('checked', 'checked');
+       $('#diesel, #price_diesel').find('input[type=hidden]').removeAttr('disabled');
+       $('#petrol, #speed, #price_speed, #price_petrol').addClass('d-none').find('input[type=radio]').removeAttr('checked');
+       $('#petrol, #speed, #price_speed, #price_petrol').find('input[type=hidden]').attr('disabled', 'disabled');
        $('#reading_value_,#total_bal_amt_').val('');
        $('#total_amt_').text(0);
 
      }
 
-     if(tank == 'a2' && shift == 'shift_3' || tank == 'b2' && shift == 'shift_4')
-     {
-       $('#detailshow').removeClass('d-none');
+    if((mpd == 'mpd3' || mpd == 'mpd4') && (filler == 'a2' || filler == 'b2'))
+       {
+         $('#detailshow').removeClass('d-none');
 
-       $('#speed, #price_speed').removeClass('d-none').find('input').attr('checked', 'checked');
-       $('#diesel, #petrol, #price_diesel, #price_petrol').addClass('d-none').find('input').removeAttr('checked');
-       $('#reading_value_,#total_bal_amt_').val('');
-       $('#total_amt_').text(0);
+         $('#speed, #price_speed').removeClass('d-none').find('input[type=radio]').attr('checked', 'checked');
+         $('#speed, #price_speed').find('input[type=hidden]').removeAttr('disabled');
+         $('#diesel, #petrol, #price_diesel, #price_petrol').addClass('d-none').find('input').removeAttr('checked');
+         $('#diesel, #petrol, #price_diesel, #price_petrol').find('input[type=hidden]').attr('disabled', 'disabled');
+         $('#reading_value_,#total_bal_amt_').val('');
+         $('#total_amt_').text(0);
+
      }
 
-     $('[id^=reading_value_], [id^=price_]').keyup(function(key){
+   });
+
+
+     $('[id^=reading_value_],[id^=priceval_]').keyup(function(key) {
+
+       var checkedId = $('input[type=radio]:checked').attr('id');
+       var price = $('#priceval_' + checkedId).val();
+
        var str = $(this).attr('id');
        var id = str.split('_').pop();
 
-       var price = $('#price_' + id).val();
-       var value = $('#reading_value_' + id).val();
+       var value = $('#reading_value_').val();
        $('#total_amt_' + id).text(parseFloat(price) * parseFloat(value));
        $('#total_bal_amt_' + id).val(parseFloat(price) * parseFloat(value));
      });
 
-});
+
+     $('[id^=editpriceval_]').each(function(key) {
+
+       var str = $(this).attr('id');
+       var id = str.split('_').pop();
+       $('#editreading_value_' + id + ',#editpriceval_' + id).keyup(function() {
+         var price = $('#editpriceval_' + id).val();
+
+         var value = $('#editreading_value_' + id).val();
+         $('#total_amt_' + id).text(parseFloat(price) * parseFloat(value));
+         $('#total_bal_amt_' + id).val(parseFloat(price) * parseFloat(value));
+       });
+     });
 
 $('#date').change(function(){
   var date = $('#date').val();

@@ -87,8 +87,8 @@ class PunkController extends Controller
     {
 
       $request->validate([
-          'tank' => 'required',
-          'shift' => 'required',
+          'mpd' => 'required',
+          'filler' => 'required',
           'fuel' => 'required',
           'price' => 'required|numeric',
           'reading_value' => 'required',
@@ -96,14 +96,10 @@ class PunkController extends Controller
           'insert_date' => 'required|date',
       ]);
 
-      $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
-      $shit_time = ($request->shift_time == 'custom_time') ? $custom :  $request->shift_time;
-
       $fuel = new Fuel();
       $fuel->user_id = auth()->user()->id;
-      $fuel->tank = $request->tank;
-      $fuel->shift = $request->shift;
-      $fuel->shift_time = $shit_time;
+      $fuel->mpd = $request->mpd;
+      $fuel->filler = $request->filler;
       $fuel->fuel = $request->fuel;
       $fuel->price = $request->price;
       $fuel->read_value = $request->reading_value;
@@ -123,8 +119,8 @@ class PunkController extends Controller
     {
 
       $request->validate([
-          'tank' => 'required',
-          'shift' => 'required',
+          'mpd' => 'required',
+          'filler' => 'required',
           'fuel' => 'required',
           'price' => 'required|numeric',
           'reading_value' => 'required',
@@ -132,12 +128,9 @@ class PunkController extends Controller
           'insert_date' => 'required|date',
       ]);
 
-      $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
-      $shit_time = ($request->shift_time == 'custom_time') ? $custom :  $request->shift_time;
 
-      $fuel->tank = $request->tank;
-      $fuel->shift = $request->shift;
-      $fuel->shift_time = $shit_time;
+      $fuel->mpd = $request->mpd;
+      $fuel->filler = $request->filler;
       $fuel->fuel = $request->fuel;
       $fuel->price = $request->price;
       $fuel->read_value = $request->reading_value;
@@ -168,8 +161,8 @@ class PunkController extends Controller
     {
 
       $request->validate([
-          'tank' => 'required',
-          'shift' => 'required',
+          'mpd' => 'required',
+          'filler' => 'required',
           'fuel' => 'required',
           'insert_date' => 'required|date',
           'paytm' => 'numeric',
@@ -178,14 +171,10 @@ class PunkController extends Controller
           'card' => 'numeric'
       ]);
 
-      $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
-      $shit_time = ($request->shift_time == 'custom_time') ? $custom :  $request->shift_time;
-
       $payment = new Payment();
       $payment->user_id = auth()->user()->id;
-      $payment->tank = $request->tank;
-      $payment->shift = $request->shift;
-      $payment->shift_time = $shit_time;
+      $payment->mpd = $request->mpd;
+      $payment->filler = $request->filler;
       $payment->fuel = $request->fuel;
 
       $payment->cash = $request->cash;
@@ -209,8 +198,8 @@ class PunkController extends Controller
     {
 
       $request->validate([
-          'tank' => 'required',
-          'shift' => 'required',
+          'mpd' => 'required',
+          'filler' => 'required',
           'fuel' => 'required',
           'insert_date' => 'required|date',
           'paytm' => 'numeric',
@@ -219,12 +208,8 @@ class PunkController extends Controller
           'card' => 'numeric'
       ]);
 
-      $custom = $request->from_hr . $request->from_format . '_to_' . $request->to_hr . $request->to_format;
-      $shift_time = ($request->shift_time == 'custom_time') ? $custom :  $request->shift_time;
-
-      $payment->tank = $request->tank;
-      $payment->shift = $request->shift;
-      $payment->shift_time = $shift_time;
+      $payment->mpd = $request->mpd;
+      $payment->filler = $request->filler;
       $payment->fuel = $request->fuel;
 
       $payment->cash = $request->cash;
@@ -236,7 +221,7 @@ class PunkController extends Controller
       $payment->insert_date = $request->insert_date;
       $payment->save();
 
-      return back()->with('[updatestatus', 'ok');
+      return back()->with('paymentstatus', 'ok');
     }
 
     /**
@@ -319,24 +304,24 @@ class PunkController extends Controller
     public function fuelView(Request $request)
     {
 
-      if ($request->has('tank')) {
+      if ($request->has('mpd')) {
 
-         if($request->from == null && $request->to == null && $request->tank=='all') {
+         if($request->from == null && $request->to == null && $request->mpd=='all') {
            $fuels = Fuel::get();
          }
 
-         else if($request->from != null && $request->to != null && $request->tank=='all') {
+         else if($request->from != null && $request->to != null && $request->mpd=='all') {
            $fuels = Fuel::whereBetween('insert_date', [$request->from, $request->to])
                            ->get();
          }
 
-         else if($request->from != null && $request->to != null && $request->tank!='all') {
-           $fuels = Fuel::where('tank', $request->tank)->whereBetween('insert_date', [$request->from, $request->to])
+         else if($request->from != null && $request->to != null && $request->mpd!='all') {
+           $fuels = Fuel::where('mpd', $request->mpd)->whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
          else {
-           $fuels = Fuel::where('tank', $request->tank)->get();
+           $fuels = Fuel::where('mpd', $request->mpd)->get();
 
          }
 
@@ -353,23 +338,23 @@ class PunkController extends Controller
     public function paymentView(Request $request)
     {
 
-         if($request->from == null && $request->to == null && $request->tank=='all') {
+         if($request->from == null && $request->to == null && $request->mpd=='all') {
            $payments = Payment::get();
          }
 
-         else if($request->from != null && $request->to != null && $request->tank!='all') {
-           $payments = Payment::where('tank', $request->tank)->whereBetween('insert_date', [$request->from, $request->to])
+         else if($request->from != null && $request->to != null && $request->mpd!='all') {
+           $payments = Payment::where('tank', $request->mpd)->whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
-         else if($request->from != null && $request->to != null && $request->tank=='all') {
-           $payments = Payment::where('tank', $request->tank)->whereBetween('insert_date', [$request->from, $request->to])
+         else if($request->from != null && $request->to != null && $request->mpd=='all') {
+           $payments = Payment::where('mpd', $request->mpd)->whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
 
          else {
-           $payments = Payment::where('tank', $request->tank)->get();
+           $payments = Payment::where('mpd', $request->mpd)->get();
 
          }
          // if($request->from == null && $request->to == null && $request->fuel=='all') {

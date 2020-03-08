@@ -16,9 +16,8 @@ class CreateFuelsTable extends Migration
         Schema::create('fuels', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->enum('tank', ['a1', 'a2', 'b1', 'b2'])->nullable();
-            $table->string('shift')->nullable();
-            $table->string('shift_time')->nullable();
+            $table->enum('mpd', ['mpd1', 'mpd2', 'mpd3', 'mpd4'])->nullable();
+            $table->enum('filler', ['a1', 'a2', 'b1', 'b2'])->nullable();
             $table->enum('fuel', ['petrol', 'diesel', 'speed'])->nullable();
             $table->unsignedInteger('price')->nullable();
             $table->string('read_value')->nullable();

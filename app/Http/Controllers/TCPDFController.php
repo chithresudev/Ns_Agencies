@@ -36,8 +36,8 @@ class TCPDFController extends Controller
         $fual_data .= '
         <tr>
         <td>' . ($key + 1) . '</td>
-        <td>' . ucfirst($fuel->tank) . '</td>
-        <td>' . ucfirst(str_replace('_', ' ', $fuel->shift)) . '</td>
+        <td>' . strtoupper($fuel->mpd) . '</td>
+        <td>' . ucfirst($fuel->filler) . '</td>
         <td>' . ucfirst($fuel->fuel) . '</td>
         <td>' . $fuel->price . '</td>
         <td>' . $fuel->read_value . '</td>
@@ -55,7 +55,7 @@ class TCPDFController extends Controller
           <tr>
           <th>#</th>
           <th>MPD</th>
-          <th>Shift</th>
+          <th>Filler</th>
           <th>Fuel</th>
           <th>Price</th>
           <th>Reading</th>
@@ -94,9 +94,8 @@ EOD;
         $payment_data .= '
         <tr>
         <td>' . ($key + 1) . '</td>
-        <td>' . ucfirst($payment->tank . '</td>
-        <td>' . ucfirst(str_replace('_', ' ', $payment->shift)) . '</td>
-        <td>' . str_replace('_', ' ', $payment->shift_time)) . '</td>
+        <td>' . strtoupper($payment->mpd) . '</td>
+        <td>' . ucfirst($payment->filler) . '</td>
         <td>' . ucfirst($payment->fuel) . '</td>
         <td>' . $payment->cash . '</td>
         <td>' . $payment->checque . '</td>
@@ -117,8 +116,7 @@ EOD;
     <tr>
     <th>#</th>
     <th>MPD</th>
-    <th>Shift</th>
-    <th>Time</th>
+    <th>Filler</th>
     <th>Fuel</th>
     <th>Cash</th>
     <th>Checque</th>
@@ -166,7 +164,7 @@ EOD;
         <td>' . $stock->in_stock . '</td>
         <td>' . $stock->out_stock . '</td>
         <td>' . $stock->bal_stock . '</td>
-        <td>' . $stock->inserted_date  . '</td>
+        <td>' . $stock->insert  . '</td>
         <td>' . $stock->created  . '</td>
         </tr>';
       }

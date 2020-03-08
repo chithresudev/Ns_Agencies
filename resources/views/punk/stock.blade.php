@@ -51,19 +51,19 @@ $ids = [];
                           <div class="col-md-6 p-2">
 
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" required {{ $request->fuel == 'petrol' ? 'checked' : '' }}  type="radio" name="fuel" id="petrol" value="petrol">
+                                <input class="form-check-input" required {{ $request->fuel == 'petrol' ? 'checked' : '' }}  type="radio" name="fuel" value="petrol">
                                 <label class="form-check-label" for="petrol">Petrol</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" required {{ $request->fuel == 'diesel' ? 'checked' : '' }}  type="radio" name="fuel" id="diesel" value="diesel">
+                                <input class="form-check-input" required {{ $request->fuel == 'diesel' ? 'checked' : '' }}  type="radio" name="fuel" value="diesel">
                                 <label class="form-check-label" for="diesel">Diesel</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" required {{ $request->fuel == 'speed' ? 'checked' : '' }}  type="radio" name="fuel" id="speed" value="speed">
+                                <input class="form-check-input" required {{ $request->fuel == 'speed' ? 'checked' : '' }}  type="radio" name="fuel" value="speed">
                                 <label class="form-check-label" for="speed">Speed</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" required checked {{ $request->fuel == 'all' ? 'checked' : '' }}  type="radio" name="fuel" id="all" value="all">
+                                <input class="form-check-input" required {{ $request->fuel == 'all' ? 'checked' : '' }}  type="radio" name="fuel"  value="all">
                                 <label class="form-check-label" for="all">All</label>
                               </div>
 
@@ -138,7 +138,7 @@ $ids = [];
                           <label for="tank" class="col-md-4 col-form-label text-md-right text-info">Date</label>
 
                           <div class="col-md-6">
-                            <input type="date" name="insert_date"  value="{{ $stock->insert_date }}" required class="form-control @error('insert_date') is-invalid @enderror">
+                            <input type="date" name="insert_date"  value="{{ $stock->insert_date }}" id="insert_date" required class="form-control @error('insert_date') is-invalid @enderror">
                             @error('insert_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -179,7 +179,7 @@ $ids = [];
                       <div class="form-group row">
                           <label for="in_stock_{{ $stock->id }}" class="col-md-4 col-form-label text-md-right text-info">In Stock</label>
                           <div class="col-md-6">
-                              <input id="in_stock_{{ $stock->id }}" type="text" value="{{ $stock->in_stock }}" required class="form-control @error('in_stock') is-invalid @enderror" name="in_stock">
+                              <input id="editin_stock_{{ $stock->id }}" type="text" value="{{ $stock->in_stock }}" required class="form-control @error('in_stock') is-invalid @enderror" name="in_stock">
 
                               @error('in_stock')
                                   <span class="invalid-feedback" role="alert">
@@ -191,7 +191,7 @@ $ids = [];
                       <div class="form-group row">
                           <label for="out_stock_{{ $stock->id }}" class="col-md-4 col-form-label text-md-right text-info">Out Stock</label>
                           <div class="col-md-6">
-                              <input id="out_stock_{{ $stock->id }}" type="text" value="{{ $stock->out_stock }}" required class="form-control @error('out_stock') is-invalid @enderror" name="out_stock">
+                              <input id="editout_stock_{{ $stock->id }}" type="text" value="{{ $stock->out_stock }}" required class="form-control @error('out_stock') is-invalid @enderror" name="out_stock">
 
                               @error('out_stock')
                                   <span class="invalid-feedback" role="alert">
@@ -466,17 +466,17 @@ $(document).ready(function() {
     $('#bal_stock_' + id).val(parseFloat(price) - parseFloat(value));
   });
 
-  // $('[id^=in_stock_], [id^=out_stock_]').keyup(function(key){
-  //   var str = $(this).attr('id');
-  //   var id = str.split('_').pop();
-  //
-  //   var price = $('#in_stock_' + id).val();
-  //   var value = $('#out_stock_' + id).val();
-  //   $('#total_bal_stock_' + id).text(parseFloat(price) - parseFloat(value));
-  //   $('#bal_stock_' + id).val(parseFloat(price) - parseFloat(value));
-  // });
+  $('[id^=editin_stock_], [id^=editout_stock_]').keyup(function(key){
+    var str = $(this).attr('id');
+    var id = str.split('_').pop();
 
-  $('#petrol,#diesel,#speed').change(function(){
+    var price = $('#editin_stock_' + id).val();
+    var value = $('#editout_stock_' + id).val();
+    $('#total_bal_stock_' + id).text(parseFloat(price) - parseFloat(value));
+    $('#bal_stock_' + id).val(parseFloat(price) - parseFloat(value));
+  });
+
+  $('#petrol,#diesel,#speed, #date').change(function(){
     var date = $('#date').val();
     var fuel = $(this).val();
     window.location.href= '?fuel=' + fuel + '&date=' + date;
