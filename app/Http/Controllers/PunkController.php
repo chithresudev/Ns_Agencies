@@ -342,18 +342,20 @@ class PunkController extends Controller
            $payments = Payment::get();
          }
 
-         else if($request->from != null && $request->to != null && $request->mpd!='all') {
-           $payments = Payment::where('tank', $request->mpd)->whereBetween('insert_date', [$request->from, $request->to])
-                              ->get();
-         }
 
          else if($request->from != null && $request->to != null && $request->mpd=='all') {
-           $payments = Payment::where('mpd', $request->mpd)->whereBetween('insert_date', [$request->from, $request->to])
+
+           $payments = Payment::whereBetween('insert_date', [$request->from, $request->to])
                               ->get();
          }
 
+         else if($request->from != null && $request->to != null && $request->mpd!='all') {
+           $payments = Payment::where('mpd', $request->mpd)->whereBetween('insert_date', [$request->from, $request->to])
+           ->get();
+         }
 
          else {
+
            $payments = Payment::where('mpd', $request->mpd)->get();
 
          }
